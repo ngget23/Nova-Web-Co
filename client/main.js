@@ -1,4 +1,4 @@
-const API = "http://localhost:4242";
+const API = "https://nova-web-co-server.onrender.com";
 
 let PRICING = null;
 
