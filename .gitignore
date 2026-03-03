@@ -1,0 +1,16 @@
+# secrets
+server/.env
+client/.env
+.env
+
+# deps
+node_modules/
+server/node_modules/
+client/node_modules/
+
+# build
+dist/
+client/dist/
+
+# misc
+.DS_Store
