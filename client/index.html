@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Builder Order</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="wrap header-inner">
+        <div class="brand">
+          <div class="logo">W</div>
+          <div>
+            <div class="brand-name">Web Builds</div>
+            <div class="brand-sub">Order your website build</div>
+          </div>
+        </div>
+        <a class="btn ghost" href="#order">Start Order</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="wrap hero-inner">
+          <h1>Pick what you need. Pay. I build it.</h1>
+          <p>Fast, clean websites. Clear pricing. Checkout included.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#order">Build your package</a>
+            <a class="btn ghost" href="#pricing">See pricing</a>
+          </div>
+          <div class="hero-badges">
+            <div class="badge">Mobile friendly</div>
+            <div class="badge">SEO basics</div>
+            <div class="badge">Stripe checkout</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="section">
+        <div class="wrap">
+          <h2>Pricing</h2>
+          <p class="muted">Choose a package. Add features. Optional monthly plan.</p>
+
+          <div id="pricingCards" class="grid"></div>
+        </div>
+      </section>
+
+      <section id="order" class="section">
+        <div class="wrap">
+          <h2>Build your order</h2>
+
+          <div class="two-col">
+            <form id="orderForm" class="card">
+              <h3>Client details</h3>
+
+              <label>
+                Name
+                <input name="name" required placeholder="John Smith" />
+              </label>
+
+              <label>
+                Email
+                <input name="email" type="email" required placeholder="john@email.com" />
+              </label>
+
+              <label>
+                Business name
+                <input name="business" required placeholder="Smith Plumbing" />
+              </label>
+
+              <div class="divider"></div>
+
+              <h3>Package</h3>
+              <div id="packageOptions" class="radio-list"></div>
+
+              <div class="divider"></div>
+
+              <h3>Add-ons</h3>
+              <div id="addonOptions" class="check-list"></div>
+
+              <div class="divider"></div>
+
+              <h3>Monthly options</h3>
+              <div id="monthlyOptions" class="check-list"></div>
+
+              <label>
+                Monthly upfront commitment
+                <select name="commitMonths">
+                  <option value="0">0 months (no upfront)</option>
+                  <option value="3">3 months upfront</option>
+                  <option value="6">6 months upfront</option>
+                  <option value="12">12 months upfront</option>
+                </select>
+              </label>
+
+              <div class="divider"></div>
+
+              <label>
+                Notes (what you want built)
+                <textarea name="notes" rows="5" placeholder="Colors, pages, examples you like, features..."></textarea>
+              </label>
+
+              <button id="checkoutBtn" class="btn full" type="submit">
+                Go to checkout
+              </button>
+
+              <p class="muted small">
+                After payment, your order is sent to me by email.
+              </p>
+              <p id="formError" class="error" hidden></p>
+            </form>
+
+            <aside class="card sticky">
+              <h3>Summary</h3>
+              <div id="summary" class="summary"></div>
+
+              <div class="divider"></div>
+
+              <div class="total">
+                <div>
+                  <div class="muted small">Total due today</div>
+                  <div id="totalDue" class="total-number">$0.00</div>
+                </div>
+                <div class="muted small right">CAD</div>
+              </div>
+
+              <p class="muted small">
+                Monthly items get charged upfront based on your commitment.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <div class="muted small">© Web Builds</div>
+        <div class="muted small">Built with Stripe Checkout</div>
+      </div>
+    </footer>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
