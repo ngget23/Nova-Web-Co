@@ -15,15 +15,29 @@ const checkoutBtn = document.getElementById("checkoutBtn");
 init();
 
 async function init() {
-  PRICING = await fetchPricing();
-  renderPricing();
-  renderFormOptions();
-  wireUpdates();
-  updateSummary();
-  
-  // Add these two lines so your grid loads and animations trigger!
+  // 1. Load the UI and animations IMMEDIATELY so the screen is never blank
   renderPortfolio();
   initScrollAnimations();
+
+  // 2. Try fetching the pricing data in the background
+  try {
+    PRICING = await fetchPricing();
+    
+    // Only render pricing if the backend successfully responds
+    if (PRICING) {
+      renderPricing();
+      renderFormOptions();
+      wireUpdates();
+      updateSummary();
+    }
+  } catch (error) {
+    console.error("Pricing server is sleeping or unavailable:", error);
+    // Show a fallback message to the user instead of breaking the site
+    const pricingSection = document.getElementById("pricingCards");
+    if (pricingSection) {
+      pricingSection.innerHTML = "<p class='muted'>Pricing module is waking up. Please refresh the page in 30 seconds.</p>";
+    }
+  }
 }
 
 async function fetchPricing() {
