@@ -231,3 +231,76 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+// Intersection Observer for "Fade-in" effect
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+
+function initModernUI() {
+  document.querySelectorAll('.card, section').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+}
+
+// Dynamic High-Quality Image Map for Niches
+const nicheContext = {
+  "snow": { img: "https://images.unsplash.com/photo-1517204824045-ce0217983c2a?q=80&w=800", alt: "Ottawa residential snow removal service" },
+  "medical": { img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800", alt: "Modern medical clinic interior" },
+  "detailing": { img: "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?q=80&w=800", alt: "Professional car detailing service" },
+  // ... apply to all 10 types
+};
+
+document.addEventListener('DOMContentLoaded', initModernUI);
+
+// --- Advanced UI & Portfolio Rendering ---
+
+const demos = [
+  { id: "snow", name: "Snow Removal & Lawn", desc: "Includes area map & volume calculator", img: "https://images.unsplash.com/photo-1517204824045-ce0217983c2a?q=80&w=600&auto=format&fit=crop", link: "/demo-snow" },
+  { id: "medical", name: "Medical Clinic", desc: "HIPAA-compliant style booking & FAQ", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=600&auto=format&fit=crop", link: "/demo-medical" },
+  { id: "detailing", name: "Mobile Detailing", desc: "Before/After gallery & package selector", img: "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=600&auto=format&fit=crop", link: "/demo-detailing" },
+  { id: "handyman", name: "Handyman Services", desc: "Dynamic project estimate calculator", img: "https://images.unsplash.com/photo-1581141849291-1125c7b692b5?q=80&w=600&auto=format&fit=crop", link: "/demo-handyman" },
+  { id: "bakery", name: "Bakery & Catering", desc: "Visual menu & custom order forms", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop", link: "/demo-bakery" },
+  { id: "braiding", name: "Hair Braiding Studio", desc: "Visual style selector & deposit flow", img: "https://images.unsplash.com/photo-1560014676-127e434f0c86?q=80&w=600&auto=format&fit=crop", link: "/demo-braiding" },
+  { id: "tutoring", name: "Tutoring Service", desc: "Subject filters & parent contact portal", img: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=600&auto=format&fit=crop", link: "/demo-tutoring" },
+  { id: "pet", name: "Mobile Pet Grooming", desc: "Breed size selector & scheduling", img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=600&auto=format&fit=crop", link: "/demo-pet" },
+  { id: "chef", name: "Personal Chef", desc: "Dietary preference capture & meal plans", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop", link: "/demo-chef" },
+  { id: "farm", name: "Farm / CSA Box", desc: "Subscription showcase & delivery zones", img: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=600&auto=format&fit=crop", link: "/demo-farm" }
+];
+
+function renderPortfolio() {
+  const grid = document.getElementById("portfolioGrid");
+  if (!grid) return;
+
+  grid.innerHTML = demos.map(demo => `
+    <a href="${demo.link}" class="demo-card">
+      <img src="${demo.img}" alt="${demo.name} website template" class="demo-image" loading="lazy" />
+      <div class="demo-info">
+        <h3 class="demo-title">${demo.name}</h3>
+        <div class="demo-desc">${demo.desc}</div>
+      </div>
+    </a>
+  `).join("");
+}
+
+// Intersection Observer for the smooth scroll reveals
+function initScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// Call these inside your existing init() function at the top of main.js
+// renderPortfolio();
+// initScrollAnimations();
