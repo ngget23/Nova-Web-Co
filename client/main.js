@@ -20,6 +20,10 @@ async function init() {
   renderFormOptions();
   wireUpdates();
   updateSummary();
+  
+  // Add these two lines so your grid loads and animations trigger!
+  renderPortfolio();
+  initScrollAnimations();
 }
 
 async function fetchPricing() {
@@ -301,6 +305,3 @@ function initScrollAnimations() {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
-// Call these inside your existing init() function at the top of main.js
-// renderPortfolio();
-// initScrollAnimations();
