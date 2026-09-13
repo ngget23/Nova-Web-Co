@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import { PRICING, calculateTotalCents, formatMoney } from "./pricing.js";
 import { makeTransporter, sendOrderEmail } from "./mailer.js";
 import { sendSms, smsConfigured } from "./sms.js";
-import { validateLead, saveLead, rateLimit, formatLeadSms } from "./leads.js";
+import { validateLead, saveLead, rateLimit, formatLeadSms, formatWhen } from "./leads.js";
 
 const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -118,6 +118,7 @@ app.post("/api/lead", async (req, res) => {
           <p><b>Phone:</b> ${escapeHtml(lead.phone || "-")}</p>
           <p><b>Email:</b> ${escapeHtml(lead.email || "-")}</p>
           <p><b>Interested in:</b> ${escapeHtml(lead.service || "-")}</p>
+          <p><b>Wants to be reached:</b> ${escapeHtml(formatWhen(lead.preferred_date, lead.preferred_time) || "-")}</p>
           <p><b>Message:</b><br/>${escapeHtml(lead.message || "-")}</p>
         `
       });

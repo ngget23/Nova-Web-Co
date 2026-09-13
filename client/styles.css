@@ -423,6 +423,21 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(251, 191, 60, 0.14);
 }
 textarea { min-height: 118px; resize: vertical; }
+
+/* Chromium draws the date picker glyph near-black, which disappears on the
+   dark field. Invert it and tint it to the accent on hover. */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(0.8);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+input[type="date"]:hover::-webkit-calendar-picker-indicator,
+input[type="date"]:focus::-webkit-calendar-picker-indicator {
+  opacity: 1;
+}
+/* Firefox/Safari fall back to the plain field, which is already legible. */
+input[type="date"] { min-height: 46px; }
 select option { background: var(--graphite-2); color: var(--signal); }
 
 .field-row { display: grid; gap: 1.05rem; }

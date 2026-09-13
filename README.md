@@ -14,7 +14,7 @@ Three things send a text to your phone:
 
 | Trigger | Text you get |
 | --- | --- |
-| Someone submits the contact form | `New lead - Nova Web Co` + name, business, phone, email, what they want, their message |
+| Someone submits the contact form | `New lead - Nova Web Co` + name, business, phone, email, what they want, **the day and time they asked to be called**, their message |
 | Someone reaches Stripe checkout | `Checkout started` + who they are and the total |
 | A payment succeeds | `PAID ORDER` + who and how much |
 
@@ -87,10 +87,31 @@ Everything lives in `server/.env` — see `server/.env.example` for the full lis
 | `POST /api/create-checkout-session` | Builds a Stripe Checkout session |
 | `POST /api/webhook` | Stripe webhook — marks the order paid and texts you |
 
-`POST /api/lead` takes `name` (required) plus at least one of `phone` or
-`email`, and optionally `business`, `service`, `message`. It's protected by a
-hidden honeypot field and a 5-per-10-minutes-per-IP throttle so nobody can flood
-your phone.
+`POST /api/lead` requires:
+
+- `name`
+- at least one of `phone` or `email`
+- `preferred_date` (`YYYY-MM-DD`) and `preferred_time` (`HH:MM`, 24-hour)
+
+and optionally `business`, `service`, `message`. It's protected by a hidden
+honeypot field and a 5-per-10-minutes-per-IP throttle so nobody can flood your
+phone.
+
+### The callback slot
+
+The form asks every lead when they want to be reached, and that lands in your
+text as `When: Mon Sep 14, 2:30 PM`.
+
+- The date picker is bounded to today through a year out and defaults to the
+  next weekday, so the usual case is one tap.
+- Times are fixed half-hour slots from 8:00 AM to 7:00 PM — a dropdown rather
+  than a free time field, so nobody books 3am.
+- The server re-checks both independently of the browser: real calendar date,
+  not in the past, within a year, inside business hours.
+
+To change the hours or the booking window, edit `SLOT_START_MIN`, `SLOT_END_MIN`
+and `MAX_DAYS_AHEAD` at the top of `server/leads.js`, and the matching loop in
+`initBookingFields()` in `client/main.js`.
 
 ### Leads on disk
 

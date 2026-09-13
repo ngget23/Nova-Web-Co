@@ -58,6 +58,8 @@ const el = {
   contactError: $("contactError"),
   contactSuccess: $("contactSuccess"),
   contactBtn: $("contactBtn"),
+  contactDate: $("c_date"),
+  contactTime: $("c_time"),
   year: $("year")
 };
 
@@ -100,9 +102,58 @@ function money(cents) {
 
 /* ---------------- contact form: this is what texts the owner ------------- */
 
+/**
+ * Fills the date and time pickers.
+ *
+ * The date is bounded to today..+1 year so nobody asks for a callback in the
+ * past, and the times are fixed half-hour slots inside business hours rather
+ * than a free time input - it keeps 3am off the calendar and matches what the
+ * server accepts.
+ */
+function initBookingFields() {
+  const dateInput = el.contactDate;
+  const timeSelect = el.contactTime;
+
+  if (dateInput) {
+    const today = new Date();
+    const iso = d =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+    const nextYear = new Date(today);
+    nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+    dateInput.min = iso(today);
+    dateInput.max = iso(nextYear);
+
+    // Default to the next weekday, so the common case is one tap.
+    const suggested = new Date(today);
+    suggested.setDate(suggested.getDate() + 1);
+    while (suggested.getDay() === 0 || suggested.getDay() === 6) {
+      suggested.setDate(suggested.getDate() + 1);
+    }
+    dateInput.value = iso(suggested);
+  }
+
+  if (timeSelect) {
+    const slots = ['<option value="">Choose a time…</option>'];
+
+    for (let minutes = 8 * 60; minutes <= 19 * 60; minutes += 30) {
+      const hh = Math.floor(minutes / 60);
+      const mm = minutes % 60;
+      const value = `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+      const label = `${hh % 12 === 0 ? 12 : hh % 12}:${String(mm).padStart(2, "0")} ${hh >= 12 ? "PM" : "AM"}`;
+      slots.push(`<option value="${value}">${label}</option>`);
+    }
+
+    timeSelect.innerHTML = slots.join("");
+  }
+}
+
 function wireContactForm() {
   const form = el.contactForm;
   if (!form) return;
+
+  initBookingFields();
 
   form.addEventListener("submit", async e => {
     e.preventDefault();
@@ -117,6 +168,8 @@ function wireContactForm() {
       phone: str(fd.get("phone")),
       email: str(fd.get("email")),
       service: str(fd.get("service")),
+      preferred_date: str(fd.get("preferred_date")),
+      preferred_time: str(fd.get("preferred_time")),
       message: str(fd.get("message")),
       company_website: str(fd.get("company_website")), // honeypot
       source: "homepage contact form"
@@ -126,6 +179,8 @@ function wireContactForm() {
     if (!payload.phone && !payload.email) {
       return failContact("Add a phone number or an email so I can get back to you.");
     }
+    if (!payload.preferred_date) return failContact("Pick the day that suits you best.");
+    if (!payload.preferred_time) return failContact("Pick a time that suits you best.");
 
     setBusy(el.contactBtn, true, "Sending...");
 
@@ -140,6 +195,7 @@ function wireContactForm() {
       if (!res.ok) throw new Error(data?.error || "Something went wrong sending that.");
 
       form.reset();
+      initBookingFields();
       show(
         el.contactSuccess,
         "Got it — that just hit my phone. I'll be in touch shortly, usually the same day."

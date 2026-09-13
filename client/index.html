@@ -266,6 +266,19 @@
                   </select>
                 </div>
 
+                <div class="field-row">
+                  <div class="field">
+                    <label for="c_date">Best day to reach you <span class="req">*</span></label>
+                    <input id="c_date" name="preferred_date" type="date" required />
+                  </div>
+                  <div class="field">
+                    <label for="c_time">Best time <span class="req">*</span></label>
+                    <select id="c_time" name="preferred_time" required>
+                      <option value="">Choose a time…</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div class="field">
                   <label for="c_message">Anything else?</label>
                   <textarea id="c_message" name="message" placeholder="What you do, roughly where you serve, and what's not working about the site you have now."></textarea>
@@ -280,6 +293,7 @@
                 <button id="contactBtn" class="btn block" type="submit">Send it — I'll text you back</button>
                 <p class="form-note">
                   Phone or email, either works — one of the two so I can reply.
+                  Pick a day and time that suits you and I'll call then.
                   Your details go straight to me and nowhere else.
                 </p>
               </form>
@@ -290,8 +304,9 @@
                 <div class="eyebrow" style="margin-bottom: 0.75rem">Straight answers</div>
                 <h3 style="font-size: 1.25rem">What happens next</h3>
                 <p class="muted small" style="margin: 0">
-                  You hit send, I get a text within seconds. I reply with a price
-                  and a start date — not a discovery-call funnel.
+                  You hit send, I get a text within seconds — including the day and
+                  time you picked. I call you then with a price and a start date,
+                  not a discovery-call funnel.
                 </p>
               </div>
               <div class="contact-line">
@@ -300,7 +315,7 @@
               </div>
               <div class="contact-line">
                 <div class="k">Reply</div>
-                <div class="v">Same day, most days</div>
+                <div class="v">Same day, most days — or exactly when you asked</div>
               </div>
               <div class="contact-line">
                 <div class="k">Cost</div>
