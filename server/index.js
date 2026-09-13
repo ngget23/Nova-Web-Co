@@ -8,6 +8,8 @@ import { fileURLToPath } from "url";
 
 import { PRICING, calculateTotalCents, formatMoney } from "./pricing.js";
 import { makeTransporter, sendOrderEmail } from "./mailer.js";
+import { sendSms, smsConfigured } from "./sms.js";
+import { validateLead, saveLead, rateLimit, formatLeadSms } from "./leads.js";
 
 const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -16,12 +18,116 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ORDERS_PATH = path.join(__dirname, "orders.json");
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN }));
+// Render/most hosts terminate TLS at a proxy; needed for a real req.ip.
+app.set("trust proxy", 1);
+
+/**
+ * CORS allowlist.
+ *
+ * CLIENT_ORIGIN may hold several origins, comma separated, so the apex domain,
+ * the www subdomain and any preview deploy all work. Localhost is always
+ * allowed for development. If CLIENT_ORIGIN is unset we fall back to open CORS
+ * rather than silently sending no headers at all - that failure mode blocks
+ * every browser request and quietly loses leads.
+ */
+const ALLOWED_ORIGINS = String(process.env.CLIENT_ORIGIN || "")
+  .split(",")
+  .map(o => o.trim().replace(/\/$/, ""))
+  .filter(Boolean);
+
+if (!ALLOWED_ORIGINS.length) {
+  console.warn("[cors] CLIENT_ORIGIN not set - allowing all origins.");
+}
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      // No Origin header: curl, server-to-server, Stripe webhooks.
+      if (!origin) return callback(null, true);
+      if (!ALLOWED_ORIGINS.length) return callback(null, true);
+
+      const normalized = origin.replace(/\/$/, "");
+      const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalized);
+
+      if (isLocalhost || ALLOWED_ORIGINS.includes(normalized)) return callback(null, true);
+
+      console.warn(`[cors] Blocked origin: ${origin}`);
+      return callback(null, false);
+    }
+  })
+);
 app.use(express.json());
 app.get("/", (req, res) => {
 res.send("Server is running. Use /api/pricing");
 });
 app.get("/api/pricing", (req, res) => res.json(PRICING));
+
+app.get("/api/health", (req, res) =>
+  res.json({ ok: true, sms: smsConfigured() })
+);
+
+/**
+ * Contact / lead capture. Texts the owner the moment someone leaves info.
+ * The lead is saved and a 200 returned even if the text fails, so a Twilio
+ * outage never shows the visitor an error after they already hit send.
+ */
+app.post("/api/lead", async (req, res) => {
+  // Honeypot: a real person never fills a field they cannot see.
+  if (String(req.body?.company_website ?? "").trim()) {
+    return res.json({ ok: true });
+  }
+
+  const { ok, error, lead } = validateLead(req.body);
+  if (!ok) return res.status(400).json({ error });
+
+  const limit = rateLimit(req.ip || "unknown");
+  if (!limit.allowed) {
+    return res.status(429).json({
+      error: "You've already sent a few messages. We'll be in touch shortly."
+    });
+  }
+
+  const record = { ...lead, created_at: new Date().toISOString(), ip: req.ip };
+
+  try {
+    saveLead(record);
+  } catch (err) {
+    console.error("[lead] Could not write leads.json:", err?.message || err);
+  }
+
+  // Text first - it is the notification that actually reaches a phone.
+  let texted = false;
+  try {
+    const result = await sendSms(formatLeadSms(lead));
+    texted = !result.skipped && result.results.some(r => r.ok);
+  } catch (err) {
+    console.error("[lead] SMS alert failed:", err?.message || err);
+  }
+
+  // Email is the backup copy, and only if mail is configured.
+  if (process.env.EMAIL_HOST && process.env.ORDER_RECEIVER_EMAIL) {
+    try {
+      await sendOrderEmail({
+        transporter: makeTransporter(process.env),
+        to: process.env.ORDER_RECEIVER_EMAIL,
+        subject: `New lead: ${lead.business || lead.name}`,
+        html: `
+          <h2>New website lead</h2>
+          <p><b>Name:</b> ${escapeHtml(lead.name)}</p>
+          <p><b>Business:</b> ${escapeHtml(lead.business || "-")}</p>
+          <p><b>Phone:</b> ${escapeHtml(lead.phone || "-")}</p>
+          <p><b>Email:</b> ${escapeHtml(lead.email || "-")}</p>
+          <p><b>Interested in:</b> ${escapeHtml(lead.service || "-")}</p>
+          <p><b>Message:</b><br/>${escapeHtml(lead.message || "-")}</p>
+        `
+      });
+    } catch (err) {
+      console.error("[lead] Email copy failed:", err?.message || err);
+    }
+  }
+
+  res.json({ ok: true, texted });
+});
 
 function readOrders() {
 if (!fs.existsSync(ORDERS_PATH)) return [];
@@ -83,6 +189,20 @@ try {
     });
     writeOrders(orders);
 
+    // They left their details and are heading to Stripe - worth knowing even
+    // if they never finish paying. Never let a failed text block checkout.
+    sendSms(
+      [
+        "Checkout started - Nova Web Co",
+        "",
+        customer.name,
+        customer.business,
+        customer.email,
+        `Total: $${formatMoney(totalCents)} ${PRICING.currency.toUpperCase()}`,
+        `Package: ${selections.package}`
+      ].join("\n")
+    ).catch(err => console.error("[sms] checkout alert failed:", err?.message || err));
+
     res.json({ url: session.url });
 } catch {
     res.status(500).json({ error: "Server error creating checkout session." });
@@ -139,6 +259,21 @@ if (order && !order.paid) {
         html
         });
     } catch {}
+
+    try {
+        await sendSms(
+        [
+            "PAID ORDER - Nova Web Co",
+            "",
+            customerName,
+            business,
+            customerEmail,
+            `$${formatMoney(order.total_cents)} ${PRICING.currency.toUpperCase()}`
+        ].join("\n")
+        );
+    } catch (err) {
+        console.error("[sms] paid-order alert failed:", err?.message || err);
+    }
     }
 }
 
@@ -157,6 +292,9 @@ return String(s)
     .replaceAll("'", "&#039;");
 }
 
-app.listen(process.env.PORT, () => {
-console.log(`Server running on http://localhost:${process.env.PORT}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Text alerts: ${smsConfigured() ? "enabled" : "NOT configured (see .env.example)"}`);
 });

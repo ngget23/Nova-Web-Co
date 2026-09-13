@@ -14,3 +14,7 @@ client/dist/
 
 # misc
 .DS_Store
+# runtime data
+server/orders.json
+server/leads.json
+server/orders.db

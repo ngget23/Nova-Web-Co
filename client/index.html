@@ -3,59 +3,417 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Website Builder Order</title>
+    <title>Nova Web Co — Websites that book the job</title>
+    <meta
+      name="description"
+      content="Nova Web Co builds fast, mobile-first websites for local service businesses in Ottawa. Live demos by industry, a clear price, and your site live in under 7 days."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fbbf3c'/%3E%3Ctext x='16' y='23' font-family='system-ui,sans-serif' font-size='19' font-weight='700' text-anchor='middle' fill='%2314100a'%3EN%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600&family=Lora:ital,wght@1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <header class="header">
       <div class="wrap header-inner">
-        <div class="brand">
-          <div class="logo">W</div>
+        <a class="brand" href="#top">
+          <div class="logo">N</div>
           <div>
-            <div class="brand-name">Web Builds</div>
-            <div class="brand-sub">Order your website build</div>
+            <div class="brand-name">Nova Web Co</div>
+            <div class="brand-sub">Ottawa</div>
           </div>
-        </div>
-        <a class="btn ghost" href="#order">Start Order</a>
+        </a>
+        <nav class="nav">
+          <a class="nav-link" href="#systems">What we build</a>
+          <a class="nav-link" href="#process">Process</a>
+          <a class="nav-link" href="#demos">Industries</a>
+          <a class="nav-link" href="#pricing">Pricing</a>
+          <a class="btn" href="#contact">Let's talk</a>
+        </nav>
       </div>
     </header>
 
-<main>
+    <main id="top">
+      <!-- ============ HERO ============ -->
       <section class="hero">
         <div class="wrap hero-inner reveal">
           <div class="hero-badges">
-            <div class="badge">Ottawa & Surrounding Areas</div>
-            <div class="badge">Zero Risk</div>
+            <div class="badge"><span class="dot"></span> Taking builds this month</div>
+            <div class="badge">Ottawa &amp; surrounding areas</div>
+            <div class="badge">Live in 7 days</div>
           </div>
-          <h1>Premium websites for local businesses.</h1>
-          <p>Stop losing customers to outdated mobile sites. Choose your industry, test the live demo, and I’ll customize it for your brand in under 7 days.</p>
+
+          <h1>You do the work.<br />Your website should do the <em>selling</em>.</h1>
+
+          <p class="lead">
+            Most local businesses lose customers before the phone ever rings — a slow
+            site, a broken form, nothing that works on a phone. We build the one that
+            turns a visitor into a booked job, then hand you the keys.
+          </p>
+
           <div class="hero-actions">
-            <a class="btn" href="#demos">View Live Demos</a>
-            <a class="btn ghost" href="#order">Get a Custom Quote</a>
+            <a class="btn" href="#contact">Get a free quote</a>
+            <a class="btn ghost" href="#demos">See live demos →</a>
+          </div>
+
+          <div class="hero-proof">
+            <div class="proof-item">
+              <div class="proof-num">7 days</div>
+              <div class="proof-label">From deposit to live site</div>
+            </div>
+            <div class="proof-item">
+              <div class="proof-num">&lt; 1.5s</div>
+              <div class="proof-label">Target mobile load time</div>
+            </div>
+            <div class="proof-item">
+              <div class="proof-num">10</div>
+              <div class="proof-label">Industry demos ready to go</div>
+            </div>
+            <div class="proof-item">
+              <div class="proof-num">You own it</div>
+              <div class="proof-label">Domain, code, content — yours</div>
+            </div>
           </div>
         </div>
       </section>
 
+      <!-- ============ SYSTEMS ============ -->
+      <section id="systems" class="section">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">What we build</div>
+            <h2>A website is a system, not a brochure.</h2>
+            <p class="lead">
+              Every piece below exists for one reason: to get a stranger from
+              "just looking" to on your calendar.
+            </p>
+          </div>
+
+          <div class="systems-grid reveal">
+            <div class="system-card">
+              <div class="system-icon">◆</div>
+              <h3>Conversion-first design</h3>
+              <p>
+                Built around the one action you want. Clear offer, clear proof,
+                a button that's never more than a thumb away.
+              </p>
+            </div>
+            <div class="system-card">
+              <div class="system-icon">✆</div>
+              <h3>Lead capture that texts you</h3>
+              <p>
+                The second someone leaves their name and number, your phone buzzes.
+                No inbox, no dashboard, no missed lead.
+              </p>
+            </div>
+            <div class="system-card">
+              <div class="system-icon">⌁</div>
+              <h3>Speed &amp; Core Web Vitals</h3>
+              <p>
+                Sub-second loads on real phones on real networks. Google notices.
+                So does the customer standing in your driveway.
+              </p>
+            </div>
+            <div class="system-card">
+              <div class="system-icon">⌖</div>
+              <h3>Local SEO foundation</h3>
+              <p>
+                Google Business Profile, schema, service-area pages and the
+                technical basics so you show up when someone searches nearby.
+              </p>
+            </div>
+            <div class="system-card">
+              <div class="system-icon">▤</div>
+              <h3>Booking &amp; quoting flows</h3>
+              <p>
+                Calendar booking, deposit collection, and intake forms that ask the
+                questions you'd ask anyway — before you pick up the phone.
+              </p>
+            </div>
+            <div class="system-card">
+              <div class="system-icon">↻</div>
+              <h3>Care after launch</h3>
+              <p>
+                Hosting, backups, updates and content edits. It stays fast and stays
+                online without you thinking about it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PROCESS ============ -->
+      <section id="process" class="section">
+        <div class="wrap section-head reveal">
+          <div class="eyebrow">How it works</div>
+          <h2>Three steps. No agency theatre.</h2>
+        </div>
+        <div class="steps reveal">
+          <div class="step">
+            <div class="step-num">01 — PICK</div>
+            <h3>Choose your industry demo</h3>
+            <p>
+              Click through a real, working site built for your trade. You see the
+              exact layout and lead flow you'll get before you spend a dollar.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">02 — BUILD</div>
+            <h3>We make it yours</h3>
+            <p>
+              Your brand, your photos, your services and your service area. One
+              round of revisions included, turned around in a day.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">03 — LAUNCH</div>
+            <h3>Live, and sending you leads</h3>
+            <p>
+              We point your domain, wire up the text alerts, and hand over the
+              logins. Inside a week you're taking work off the site.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ INDUSTRIES ============ -->
       <section id="demos" class="section">
         <div class="wrap">
-          <h2 class="reveal">Select Your Industry</h2>
-          <p class="muted reveal">Click a demo to see the exact lead-capture flow and design you'll receive.</p>
-          
+          <div class="section-head reveal">
+            <div class="eyebrow">Industries</div>
+            <h2>Start from a demo built for your trade.</h2>
+            <p class="lead">
+              Each one is a complete site with the lead-capture flow that suits how
+              that business actually gets hired.
+            </p>
+          </div>
           <div id="portfolioGrid" class="portfolio-grid reveal"></div>
         </div>
       </section>
 
+      <!-- ============ PRICING ============ -->
       <section id="pricing" class="section">
-          </section>
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Pricing</div>
+            <h2>One price, quoted up front.</h2>
+            <p class="lead">
+              No hourly billing, no surprise invoices. Pick a package, add what you
+              need, and that's the number.
+            </p>
+          </div>
+          <div id="pricingCards" class="pricing-grid reveal"></div>
+        </div>
+      </section>
 
+      <!-- ============ CONTACT (texts the owner) ============ -->
+      <section id="contact" class="section">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Let's talk</div>
+            <h2>Leave your info. My phone buzzes.</h2>
+            <p class="lead">
+              Tell me a bit about the business and I'll come back with a straight
+              answer on scope, price and timeline — usually same day.
+            </p>
+          </div>
+
+          <div class="form-shell reveal">
+            <div class="panel">
+              <form id="contactForm" novalidate>
+                <div id="contactSuccess" class="form-success" hidden></div>
+                <div id="contactError" class="form-error" hidden></div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="c_name">Your name <span class="req">*</span></label>
+                    <input id="c_name" name="name" type="text" autocomplete="name" placeholder="Jordan Lee" required />
+                  </div>
+                  <div class="field">
+                    <label for="c_business">Business name</label>
+                    <input id="c_business" name="business" type="text" autocomplete="organization" placeholder="Lee &amp; Sons Roofing" />
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="c_phone">Phone <span class="req">*</span></label>
+                    <input id="c_phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(613) 555-0123" />
+                  </div>
+                  <div class="field">
+                    <label for="c_email">Email</label>
+                    <input id="c_email" name="email" type="email" autocomplete="email" placeholder="you@business.ca" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="c_service">What do you need?</label>
+                  <select id="c_service" name="service">
+                    <option value="">Not sure yet — help me figure it out</option>
+                    <option value="New website">A new website</option>
+                    <option value="Redesign">Rebuild of my current site</option>
+                    <option value="Landing page">A single landing page</option>
+                    <option value="E-commerce">An online store</option>
+                    <option value="Local SEO">Local SEO / getting found on Google</option>
+                    <option value="Maintenance">Hosting &amp; maintenance only</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="c_message">Anything else?</label>
+                  <textarea id="c_message" name="message" placeholder="What you do, roughly where you serve, and what's not working about the site you have now."></textarea>
+                </div>
+
+                <!-- Honeypot: hidden from people, catches bots -->
+                <div class="hp" aria-hidden="true">
+                  <label for="c_company_website">Leave this empty</label>
+                  <input id="c_company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <button id="contactBtn" class="btn block" type="submit">Send it — I'll text you back</button>
+                <p class="form-note">
+                  Phone or email, either works — one of the two so I can reply.
+                  Your details go straight to me and nowhere else.
+                </p>
+              </form>
+            </div>
+
+            <aside class="panel contact-aside">
+              <div>
+                <div class="eyebrow" style="margin-bottom: 0.75rem">Straight answers</div>
+                <h3 style="font-size: 1.25rem">What happens next</h3>
+                <p class="muted small" style="margin: 0">
+                  You hit send, I get a text within seconds. I reply with a price
+                  and a start date — not a discovery-call funnel.
+                </p>
+              </div>
+              <div class="contact-line">
+                <div class="k">Where</div>
+                <div class="v">Ottawa, ON — and remote across Canada</div>
+              </div>
+              <div class="contact-line">
+                <div class="k">Reply</div>
+                <div class="v">Same day, most days</div>
+              </div>
+              <div class="contact-line">
+                <div class="k">Cost</div>
+                <div class="v">The quote is free and there's no retainer to talk</div>
+              </div>
+              <div class="contact-line">
+                <div class="k">Ready?</div>
+                <div class="v">Know what you want already? <a class="amber" href="#order">Build your order →</a></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ORDER / CHECKOUT ============ -->
       <section id="order" class="section">
-          </section>
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Build your order</div>
+            <h2>Configure it and pay when you're ready.</h2>
+            <p class="lead">
+              Pick your package and extras, see the total update live, and check out
+              securely through Stripe.
+            </p>
+          </div>
+
+          <div class="form-shell reveal">
+            <div class="panel">
+              <form id="orderForm" novalidate>
+                <div id="formError" class="form-error" hidden></div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="o_name">Your name <span class="req">*</span></label>
+                    <input id="o_name" name="name" type="text" autocomplete="name" required />
+                  </div>
+                  <div class="field">
+                    <label for="o_business">Business name <span class="req">*</span></label>
+                    <input id="o_business" name="business" type="text" autocomplete="organization" required />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="o_email">Email <span class="req">*</span></label>
+                  <input id="o_email" name="email" type="email" autocomplete="email" required />
+                </div>
+
+                <fieldset>
+                  <legend>Package</legend>
+                  <div id="packageOptions" class="option-list"></div>
+                </fieldset>
+
+                <fieldset>
+                  <legend>Add-ons</legend>
+                  <div id="addonOptions" class="option-list"></div>
+                </fieldset>
+
+                <fieldset>
+                  <legend>Monthly care</legend>
+                  <div id="monthlyOptions" class="option-list"></div>
+                </fieldset>
+
+                <div class="field">
+                  <label for="o_commit">Months of monthly care paid upfront</label>
+                  <input id="o_commit" name="commitMonths" type="number" min="0" max="24" step="1" value="0" />
+                </div>
+
+                <div class="field">
+                  <label for="o_notes">Project notes</label>
+                  <textarea id="o_notes" name="notes" placeholder="Pages you need, deadlines, anything we should know."></textarea>
+                </div>
+              </form>
+            </div>
+
+            <aside class="panel sticky">
+              <div class="eyebrow" style="margin-bottom: 1rem">Your build</div>
+              <div id="summary"></div>
+              <div class="total-row">
+                <div class="muted small">Due today</div>
+                <div id="totalDue" class="total-number" style="margin: 0">$0.00</div>
+              </div>
+              <button id="checkoutBtn" class="btn block" type="submit" form="orderForm" style="margin-top: 1.25rem">
+                Go to checkout
+              </button>
+              <p class="form-note">Secure payment via Stripe. I'm texted the moment it lands.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CTA BAND ============ -->
+      <section class="section">
+        <div class="wrap">
+          <div class="cta-band reveal">
+            <div class="eyebrow" style="justify-content: center">Last thing</div>
+            <h2>Still losing jobs to a site that doesn't work?</h2>
+            <p class="lead">
+              Send your info. Worst case you get a free, honest read on what's
+              wrong with the one you've got.
+            </p>
+            <div class="hero-actions" style="justify-content: center">
+              <a class="btn" href="#contact">Get a free quote</a>
+              <a class="btn ghost" href="#demos">Browse demos</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
       <div class="wrap footer-inner">
-        <div class="muted small">© Web Builds</div>
-        <div class="muted small">Built with Stripe Checkout</div>
+        <div>© <span id="year"></span> Nova Web Co — Ottawa, ON</div>
+        <div>Websites for local business. Built to book the job.</div>
       </div>
     </footer>
 

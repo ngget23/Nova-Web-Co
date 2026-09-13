@@ -1,16 +1,31 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cancelled</title>
+    <title>Checkout cancelled — Nova Web Co</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Manrope:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body class="center">
-    <div class="card">
-      <h1>Checkout cancelled</h1>
-      <p class="muted">No payment happened. You can try again.</p>
-      <a class="btn" href="/#order">Back to order</a>
+  <body>
+    <div class="status-page">
+      <div class="panel" style="max-width: 520px">
+        <div class="eyebrow" style="justify-content: center">Nothing charged</div>
+        <h1 style="font-size: clamp(2rem, 6vw, 2.75rem)">Checkout cancelled.</h1>
+        <p class="muted">
+          No payment went through. Pick up where you left off, or just send me
+          your details and we'll talk it through first.
+        </p>
+        <div class="hero-actions" style="justify-content: center">
+          <a class="btn" href="/#order">Back to your order</a>
+          <a class="btn ghost" href="/#contact">Ask a question</a>
+        </div>
+      </div>
     </div>
   </body>
 </html>
